@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "search_io",
+]
+resolver = "2"
