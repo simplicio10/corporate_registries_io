@@ -1,4 +1,5 @@
 use std::io;
+use postgres::{Client, NoTls};
 
 //Control flow based on command line input
 pub fn match_input(args: &[String]) -> io::Result<()> {
@@ -18,12 +19,18 @@ pub fn match_input(args: &[String]) -> io::Result<()> {
 fn lookup_agent() -> io::Result<()> {
     println!("What is the name of the agent?");
 
+    //Case matching here
     let mut name_agent: String = String::new();
 
     io::stdin().read_line(&mut name_agent)?;
 
     //Refactor into Postgres search
-    println!("The name of the agent is {}", name_agent.trim());
+    let mut client = Client::connect("host=localhost user=postgres password=password dbname=corp_registry_test", NoTls)?;
+
+    for row in client.query("SELECT * FROM llc_agent_il WHERE agent_name= $1", &[&name_agent])? {
+        let result: i32 = row.get("*");
+        println!("agent_info: {}", result);
+    }
 
     Ok(())
 }
