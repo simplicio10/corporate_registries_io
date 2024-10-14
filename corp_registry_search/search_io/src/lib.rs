@@ -1,5 +1,5 @@
 use std::io;
-use postgres::{Client, NoTls};
+use postgres::{Client, NoTls, Error};
 
 //Control flow based on command line input
 pub fn match_input(args: &[String]) -> io::Result<()> {
