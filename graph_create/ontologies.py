@@ -13,4 +13,8 @@ class Ontologies:
 
     @classmethod
     def get_llc_iri(cls):
-        URIRef(f"{cls.SOLI_IRI_PREFIX}R98E2kVwPFwTnP6oxYUt9HR")
+        return URIRef(f"{cls.SOLI_IRI_PREFIX}R98E2kVwPFwTnP6oxYUt9HR")
+
+if __name__ == "__main__":
+    print(Ontologies.get_entity_id_iri())
+    print(Ontologies.get_llc_iri())

@@ -16,5 +16,5 @@ def main():
     return g
 
 if __name__ == "__main__":
-    main()
+    print(main().serialize())
 
