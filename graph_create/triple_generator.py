@@ -1,3 +1,13 @@
+'''Goals for refactoring:
+
+The generator should intiially create a triple, using the file number as subject,
+for each realtionship relating to that triple.
+
+Ex: The subject is LLC_001 and it will automatically link the entity name and file number.
+
+A triple will also be created for each entity that relates to the LLC,
+e.g., members, managers, and registered agents.'''
+
 from rdflib import Literal
 from rdflib.namespace import RDF
 from ontologies import Ontologies
