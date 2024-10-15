@@ -18,3 +18,6 @@ def main():
 if __name__ == "__main__":
     print(main().serialize())
 
+''' master = pl.scan_csv('../data/samples/llc_mst_sample.csv')
+    names = pl.scan_csv('../data/samples/llc_name_sample.csv')
+    agents = pl.scan_csv('../data/samples/llc_agt_sample.csv')'''
