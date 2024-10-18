@@ -8,7 +8,7 @@ Ex: The subject is LLC_001 and it will automatically link the entity name and fi
 A triple will also be created for each entity that relates to the LLC,
 e.g., members, managers, and registered agents.'''
 
-from typing import Union, Optional
+from typing import Union, Optional, Any
 from pydantic import BaseModel, ConfigDict
 from rdflib import Graph, Literal, URIRef, BNode
 from rdflib.namespace import RDF
@@ -31,12 +31,17 @@ class TripleElement(BaseModel):
             return self.value
         return Literal(self.value, datatype=self.datatype, lang=self.language)
 
-def add_triple(g: Graph, s: TripleElement, p: TripleElement, o: TripleElement) -> tuple:
+def to_triple_element(value: Any) -> TripleElement:
+    if isinstance(value, TripleElement):
+        return value
+    return TripleElement(value=value)
+
+def add_triple(g: Graph, s: Any, p: Any, o: Any) -> tuple:
     #Adds a triple to graph using TripleElement object
     g.add((
-        s.to_rdf_term(),
-        p.to_rdf_term(),
-        o.to_rdf_term()
+        to_triple_element(s).to_rdf_term(),
+        to_triple_element(p).to_rdf_term(),
+        to_triple_element(o).to_rdf_term()
     ))
 
 if __name__ == '__main__':
@@ -46,8 +51,8 @@ if __name__ == '__main__':
     ex_name = Literal('ABC, LLC')
     ex_subj = Ontologies.IL_LLCS[f'LLC_{str(ex_fn)}']
 
-    llc_iri = TripleElement(value=Ontologies.get_llc_iri())
-    entity_id = TripleElement(value=Ontologies.get_entity_id_iri())
+    llc_iri = Ontologies.get_llc_iri()
+    entity_id = Ontologies.get_entity_id_iri()
 
     if llc_iri is None or entity_id is None:
         raise ValueError("LLC IRI or Entity ID is None")

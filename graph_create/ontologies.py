@@ -2,7 +2,7 @@ from rdflib import URIRef, Namespace
 from soli import SOLI
 
 class Ontologies:
-    IL_LLCS = Namespace(":") #Custom Namespace ID
+    IL_LLCS = Namespace("IL:") #Custom Namespace ID
     VCARD = Namespace("http://www.w3.org/2006/vcard/ns") #VCard namespace for generic person and org concepts
     SOLI = SOLI()
     SOLI_IRI_PREFIX = "https://soli.openlegalstandard.org/"
