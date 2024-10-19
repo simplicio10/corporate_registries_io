@@ -1,0 +1,3 @@
+[submodule "soli_ontology"]
+	path = soli_ontology
+	url = https://github.com/simplicio10/SOLI.git
