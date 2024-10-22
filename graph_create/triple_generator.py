@@ -58,7 +58,7 @@ if __name__ == '__main__':
         raise ValueError("LLC IRI or Entity ID is None")
 
     add_triple(g, ex_subj, RDF.type, llc_iri)
-    add_triple(g, ex_subj, Ontologies.VCARD.name, ex_name)
+    add_triple(g, ex_subj, Ontologies.VCARD.hasName, ex_name)
     add_triple(g, ex_subj, entity_id, ex_fn)
 
     print(g.serialize())
