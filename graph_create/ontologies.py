@@ -1,14 +1,24 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import (
+    BaseModel, 
+    Field, 
+    ConfigDict,
+    field_validator)
 from pathlib import Path
 import logging
-from cachetools import cached, LRUCache
-from rdflib import URIRef, Namespace
+from cachetools import (
+    cached, 
+    LRUCache)
+from rdflib import (
+    URIRef, 
+    Namespace)
 
 logger = logging.getLogger(__name__)
 
 class OntologyConfig(BaseModel):
     '''Stores IRIs and namespaces'''
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     il_prefix: str = Field(
         default='IL:',
         description='Prefix for Illinois entities'
@@ -24,7 +34,15 @@ class OntologyConfig(BaseModel):
     cache_dir: str = Field(
         default='.ontology_cache'
         description='Directory for caching ontology info'
-        ) 
+        )
+
+    @field_validator('soli_path', 'cache_dir')
+    @classmethod
+    def validate_paths(cls, v: Path) -> Path:
+        '''Convert string to path objects if needed'''
+        if isinstance(v, str):
+            return Path(v)
+        return v
 
 class OntologyError(Exception): #Refactor
     '''Base exception for ontology-related errors'''
